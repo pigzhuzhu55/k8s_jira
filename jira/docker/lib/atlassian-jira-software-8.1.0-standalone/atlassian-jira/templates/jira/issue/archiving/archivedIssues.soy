@@ -1,0 +1,63 @@
+{namespace JIRA.Templates.IssueArchiving}
+
+/**
+ * Renders a page to export archived issues data
+ *
+ * @param totalArchived
+ * @param documentationUrl
+ */
+{template .exportArchivedIssues}
+    {call aui.page.document}
+        {param windowTitle: getText('admin.export.archived.issues.data') /}
+        {param headContent}
+            <meta name="admin.active.section" content="admin_system_menu/top_system_section/import_export_section"/>
+            <meta name="admin.active.tab" content="archived_issues"/>
+        {/param}
+        {param content}
+            {call aui.page.pageHeader}
+                {param content}
+                    {call aui.page.pageHeaderMain}
+                        {param content}
+                            <h2>{getText('admin.export.archived.issues.data.title')}</h2>
+                        {/param}
+                        {param extraAttributes: [
+                        'data-track-pageview': 'archived.issues.view'
+                        ] /}
+                    {/call}
+                {/param}
+            {/call}
+            {call aui.form.form}
+                {param action: 'ArchivedIssues!download.jspa' /}
+                {param extraClasses: 'top-label'/}
+                {param content}
+                    <p>
+                        {getText('admin.export.archived.issues.data.description', $totalArchived, '<strong>', '</strong>')|noescape} {call aui.form.linkButton}
+                            {param url: $documentationUrl /}
+                            {param name: getText('admin.archiveproject.learn.more') /}
+                            {param text: getText('admin.archiveproject.learn.more') /}
+                            {param extraAttributes: [
+                            'data-track-click': 'export.archived.issues.help.click',
+                            'target': '_jirahelp',
+                            'title': getText('admin.archiveproject.learn.more')
+                            ] /}
+                        {/call}
+                    </p>
+                    <br>
+                    {call aui.form.buttons}
+                        {param extraClasses: 'form-footer'/}
+                        {param content}
+                            {call aui.form.submit}
+                                {param type: 'primary'/}
+                                {param text: getText('admin.export.archived.issues.submit.text')/}
+                                {param id: 'export'/}
+                                {param extraAttributes: [
+                                'data-track-click': 'archived.issues.download'
+                                ] /}
+                            {/call}
+                        {/param}
+                    {/call}
+                {/param}
+            {/call}
+        {/param}
+    {/call}
+{/template}

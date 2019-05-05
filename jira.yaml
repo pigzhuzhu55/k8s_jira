@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jira-service
+  namespace: default
+spec:
+  ports:
+    - name: jira-port
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: jira
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jira
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jira
+    spec:
+      containers:
+      - name: jira
+        image: caicai/jira:1.0
+        ports:
+        - name: jira-port
+          containerPort: 8080
+        volumeMounts:
+        - name: jira-volume
+          mountPath: /var/atlassian/jira
+        - name: jira-server-conf
+          mountPath: /opt/atlassian/jira/conf/
+        - name: jira-log
+          mountPath: /opt/atlassian/jira/logs
+      volumes:
+      - name: jira-server-conf
+        hostPath:
+          path: /usr/caicai/jira/conf/
+      - name: jira-volume
+        hostPath:
+          path: /usr/caicai/jira/data
+      - name: jira-log
+        hostPath:
+          path: /usr/caicai/jira/log
+          
+          
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jira-ingress
+  namespace: default
+  annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false" # 强制http重定向到https
+      nginx.ingress.kubernetes.io/proxy-body-size: "0" # 设置client_max_body_size为0
+spec:
+  rules:
+  - host: jira.caicai.com  # hostname
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jira-service
+          servicePort: 80 # 
