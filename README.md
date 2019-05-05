@@ -18,7 +18,7 @@ set session transaction isolation level read committed;
 2.目录jira/docker，生成下镜像文件，注意docker需要的文件，我都放在lib目录里面了，无需改动。
 
 ```
-
+docker build -t caicai/jira:1.0 .
 ```
 
 3.在k8s控制台执行jira.yaml部署文件
