@@ -15,10 +15,10 @@ set global transaction isolation level read committed;
 set session transaction isolation level read committed;
 ```
 
-2.目录jira/docker，生成下镜像文件，这里docker镜像创建过程中所需的文件，我都放在lib目录里面了，无需改动，里面包含mysql驱动jar等。
+2.目录jira/docker，生成下镜像文件，这里docker镜像创建过程中所需的文件，我都放在lib目录里面了，无需改动，里面包含mysql驱动jar等。如果还未有docker环境可以参考这个帖子 https://blog.csdn.net/diligent_lee/article/details/79098302
 
 ```
 docker build -t caicai/jira:1.0 .
 ```
 
-3.在k8s的dashboard主页执行jira.yaml部署文件。如果你还没部署k8s，建议可以参考这个轮子 https://github.com/gjmzj/kubeasz
+3.在k8s的dashboard主页执行jira.yaml部署文件。如果还没部署k8s，可以参考这个开源 https://github.com/gjmzj/kubeasz
