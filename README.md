@@ -4,7 +4,7 @@
 
 ## Installation 
 
-1.首先有装好mysql环境(也可以用k8s部署 https://github.com/pigzhuzhu55/k8s_mysql)，并初始化jira建库脚本，并添加用户、修改事务级别如下，因为后面jira启动的初始化环境会要求配置连接数据源
+1.首先有装好mysql环境(也可以用k8s部署 https://github.com/pigzhuzhu55/k8s_mysql )， 并初始化jira建库脚本，并添加用户、修改事务级别如下，因为后面jira启动的初始化环境会要求配置连接数据源
 
 ```mysql
 create database jira default character set utf8 collate utf8_bin;
